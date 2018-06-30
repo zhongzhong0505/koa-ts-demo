@@ -1,15 +1,10 @@
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
-
+import userRouters from './routers/user'
 
 const app = new Koa()
-const router = new Router;
 
-router.get("/", async (ctx) => {
-  ctx.body = "hello"
-})
-
-app.use(router.routes())
+app.use(userRouters.routes())
 
 app.listen(3000)
 
