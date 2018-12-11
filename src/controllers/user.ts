@@ -17,5 +17,11 @@ class UserController {
     ctx.body = [{"retcode": 0}];
   }
 
+  @router({path: '/:id', method: RequestMethod.GET})
+  async getById(ctx: Koa.Context) {
+    console.log(ctx.params.id)
+    ctx.body = [{"retcode": 0}]
+  }
+
 }
 export default UserController;

@@ -6,8 +6,9 @@ const levels = require('log4js').levels;
 
 const DEFAULT_FORMAT = ':remote-addr - -' +
   ' ":method :url HTTP/:http-version"' +
-  ' :status :content-length ":referrer"' +
-  ' ":user-agent"';
+  ' :status :content-length :response-time'+
+  'ms ":referrer"' +
+  ' ":user-agent"' ;
 
   /**
    * Return request url path,
@@ -209,7 +210,6 @@ export default function getLogger(logger4js: any, options: any) {
   const nolog = options.nolog ? createNoLogCondition(options.nolog) : null;
 
   return ({req, res}: {res:any, req: any}, next: any) => {
-    console.log(req, res)
     // mount safety
     if (req._logging) return next();
 
