@@ -33,7 +33,7 @@ app.use(connectLogger(log4js.getLogger('http'), {level: 'auto'}));
 const logger = log4js.getLogger('app');
 
 // // 路由
-const router = new Router([path.join(__dirname + "/controllers", "./*.ts")]);
+const router = new Router([path.join(__dirname + "/controllers", "./*.js"), path.join(__dirname + "/controllers", "./*.ts")]);
 app.use(router.routes())
 
 // 错误日志
@@ -41,6 +41,5 @@ app.on("error", (err, ctx) => {
     logger.error("SERVER ERROR:", err);
 });
 
-app.listen(3000)
-;
+app.listen(3000);
 console.log("Server running on port 3000.")
