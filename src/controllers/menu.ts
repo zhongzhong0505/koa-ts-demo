@@ -1,16 +1,14 @@
 import * as Koa from 'koa'
-import UserService from '../services/user';
-import { router, prefix } from '../decorators/router';
-import { RequestMethod } from '../types';
+import { Get, Put, Controller } from '../decorators/router';
 
-@prefix("/menus")
+@Controller("/menus")
 class MenuController {
-  @router({method: RequestMethod.GET})
+  @Get()
   async list(ctx: Koa.Context) {
     ctx.body = [{"menuName": "首页"}]
   }
 
-  @router({method: RequestMethod.PUT})
+  @Put()
   async add(ctx: Koa.Context) {
     console.log("添加成功");
     ctx.body = [{"retcode": 0}];

@@ -1,23 +1,25 @@
 import * as Koa from 'koa'
 import UserService from '../services/user';
-import { router, prefix } from '../decorators/router';
-import { RequestMethod } from '../types';
+import { Put, Get, Controller  } from '../decorators/router';
+import { Autowired } from '../decorators/autowired';
 
-const userService: UserService = new UserService()
 
-@prefix("/users")
+@Controller("/users")
 class UserController {
-  @router({method: RequestMethod.GET})
+  @Autowired()
+  private userService: UserService;
+
+  @Get()
   async list(ctx: Koa.Context) {
-    ctx.body = userService.list()
+    ctx.body = this.userService.list()
   }
 
-  @router({method: RequestMethod.PUT})
+  @Put()
   async add(ctx: Koa.Context) {
     ctx.body = [{"retcode": 0}];
   }
 
-  @router({path: '/:id', method: RequestMethod.GET})
+  @Get('/:id')
   async getById(ctx: Koa.Context) {
     console.log(ctx.params.id)
     ctx.body = [{"retcode": 0}]
