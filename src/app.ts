@@ -2,7 +2,6 @@ import * as Koa from 'koa';
 import Router from './middleware/Router';
 import * as path from 'path';
 import * as log4js from 'log4js';
-import * as json from 'koa-json';
 import * as body from 'koa-body';
 
 import connectLogger from './middleware/connect-logger';
@@ -24,10 +23,7 @@ app.use(async (ctx, next) => {
 });
 
 //解析Request body数据
-app.use(body()); 
-
-// JSON返回
-app.use(json());
+app.use(body({multipart: true})); 
 
 // // 日志
 log4js.configure(path.join(__dirname,'./config/log4js.json'));

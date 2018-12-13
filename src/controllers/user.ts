@@ -1,6 +1,6 @@
 import * as Koa from 'koa'
 import UserService from '../services/user';
-import { Put, Get, Controller  } from '../decorators/router';
+import { Put, Get, Controller, Post  } from '../decorators/router';
 import { Autowired } from '../decorators/autowired';
 
 
@@ -23,6 +23,12 @@ class UserController {
   async getById(ctx: Koa.Context) {
     console.log(ctx.params.id)
     ctx.body = [{"retcode": 0}]
+  }
+
+  @Post()
+  async upload(ctx : Koa.Context) {
+    console.log((ctx.request as any).body);
+    console.log((ctx.request as any).files)
   }
 
 }
