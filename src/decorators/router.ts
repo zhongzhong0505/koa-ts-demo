@@ -12,7 +12,7 @@ const router = ({path = "/", method} : {path?: string, method: RequestMethod} ) 
     return (target: any, name: string, value: PropertyDescriptor) => {
         Router.routesMap.set({
             target, path, method
-        }, target[name].bind(target));
+        }, target[name]);
     }
 }
 

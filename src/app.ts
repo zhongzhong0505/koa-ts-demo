@@ -8,6 +8,7 @@ import connectLogger from './middleware/connect-logger';
 import Annotation from './middleware/Annotation';
 const app = new Koa()
 
+
 // 错误处理
 app.use(async (ctx, next) => {
     try {

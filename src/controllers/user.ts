@@ -2,6 +2,7 @@ import * as Koa from 'koa'
 import UserService from '../services/user';
 import { Put, Get, Controller, Post  } from '../decorators/router';
 import { Autowired } from '../decorators/autowired';
+import Required from '../decorators/required';
 
 
 @Controller("/users")
@@ -10,6 +11,10 @@ class UserController {
   private userService: UserService;
 
   @Get()
+  @Required('id', {
+    name : 'id',
+    type: 'number'
+  })
   async list(ctx: Koa.Context) {
     ctx.body = this.userService.list()
   }
