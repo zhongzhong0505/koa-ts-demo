@@ -1,9 +1,6 @@
 import * as Koa from 'koa'
 import UserService from '../services/user';
-import { Put, Get, Controller, Post  } from '../decorators/router';
-import { Autowired } from '../decorators/autowired';
-import Required from '../decorators/required';
-
+import { Autowired, Put, Get, Controller, Post, Required } from '../decorators';
 
 @Controller("/users")
 class UserController {
@@ -32,6 +29,7 @@ class UserController {
 
   @Post()
   async upload(ctx : Koa.Context) {
+    console.log(ctx)
     console.log((ctx.request as any).body);
     console.log((ctx.request as any).files)
   }
