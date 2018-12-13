@@ -8,12 +8,12 @@ class UserController {
   private userService: UserService;
 
   @Get()
-  @Required('id', {
-    name : 'id',
-    type: 'number'
-  })
+  // @Required('id', {
+  //   name : 'id',
+  //   type: 'number'
+  // })
   async list(ctx: Koa.Context) {
-    ctx.body = this.userService.list()
+    ctx.body = await this.userService.list();
   }
 
   @Put()
