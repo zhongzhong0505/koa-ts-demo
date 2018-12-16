@@ -9,10 +9,18 @@ import connectLogger from "./middleware/connect-logger";
 import Annotation from "./middleware/Annotation";
 import { createConnection } from "typeorm";
 import { dbConfig } from "./config/dbconfig";
+import requestLogger from './middleware/request-logger';
 
 createConnection(dbConfig)
     .then(async (connection: any) => {
         const app = new Koa();
+        // // 日志
+        log4js.configure(path.join(__dirname, "./config/log4js.json"));
+        app.use(connectLogger(log4js.getLogger("http"), { level: "auto" }));
+        const logger = log4js.getLogger("app");
+
+        // 每次请求日志的异步日志
+        app.use(requestLogger());
 
         // 错误处理
         app.use(async (ctx, next) => {
@@ -23,6 +31,7 @@ createConnection(dbConfig)
                     success: true,
                     result
                 };
+                
             } catch (err) {
                 logger.error("SERVER ERROR:", err);
                 ctx.status = err.status || err.code || 500;
@@ -35,11 +44,6 @@ createConnection(dbConfig)
 
         //解析Request body数据
         app.use(body({ multipart: true }));
-
-        // // 日志
-        log4js.configure(path.join(__dirname, "./config/log4js.json"));
-        app.use(connectLogger(log4js.getLogger("http"), { level: "auto" }));
-        const logger = log4js.getLogger("app");
 
         // 注解
         const annotation = new Annotation([
