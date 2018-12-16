@@ -2,10 +2,11 @@
   "name": "koa-ts-demo",
   "version": "1.0.0",
   "description": "koa-ts-demo",
-  "main": "index.ts",
+  "main": "app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --watch 'src/**/*' -e ts,tsx --exec 'ts-node' ./src/index.ts"
+    "start": "nodemon --watch 'src/**/*' -e ts,tsx --exec 'ts-node' ./src/app.ts",
+    "build": "rimraf dist/ && tsc && copyfiles -u 1 src/config/*.json src/*.js dist/"
   },
   "repository": {
     "type": "git",
@@ -18,13 +19,24 @@
   },
   "homepage": "https://github.com/zhongzhong0505/koa-ts-demo#readme",
   "dependencies": {
-    "koa": "^2.5.1",
-    "koa-router": "^7.4.0"
+    "@types/node": "^10.12.14",
+    "fast-glob": "^2.2.4",
+    "koa": "^2.6.2",
+    "koa-body": "^4.0.4",
+    "koa-json": "^2.0.2",
+    "koa-router": "^7.4.0",
+    "log4js": "^3.0.6",
+    "mysql2": "^1.6.4",
+    "reflect-metadata": "^0.1.12",
+    "typeorm": "^0.2.9"
   },
   "devDependencies": {
     "@types/koa": "^2.0.46",
+    "@types/koa-json": "^2.0.18",
     "@types/koa-router": "^7.0.30",
+    "copyfiles": "^2.1.0",
     "nodemon": "^1.17.5",
+    "rimraf": "^2.6.2",
     "ts-node": "^7.0.0",
     "typescript": "^2.9.2"
   }
