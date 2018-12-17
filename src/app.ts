@@ -19,10 +19,12 @@ createConnection(dbConfig)
             try {
                 await next();
                 const result = ctx.body;
-                ctx.body = {
-                    success: true,
-                    result
-                };
+                if(ctx.status == 200) {
+                    ctx.body = {
+                        success: true,
+                        result
+                    };
+                }
             } catch (err) {
                 logger.error("SERVER ERROR:", err);
                 ctx.status = err.status || err.code || 500;
