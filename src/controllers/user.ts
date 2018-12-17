@@ -12,8 +12,10 @@ class UserController {
   //   name : 'id',
   //   type: 'number'
   // })
-  async list(ctx: Koa.Context) {
+  async list(ctx: Koa.Context, next: any) {
     ctx.body = await this.userService.list();
+    throw new Error()
+    // return next();
   }
 
   @Put()
