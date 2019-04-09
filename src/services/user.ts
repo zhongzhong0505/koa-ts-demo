@@ -1,5 +1,5 @@
 import User from '../models/user'
-import { Service } from '../decorators/autowired';
+import { Service } from '../decorators/annotation';
 import {getManager} from "typeorm";
 
 @Service()

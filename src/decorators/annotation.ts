@@ -13,5 +13,11 @@ export const Autowired = () => {
 export const Service = () => {
     return (target: any) => {
         Annotation.instancesMap.set(capitalizeEveryWord(target.name), new target());
-    }
-}
+    };
+};
+
+export const Component = () => {
+    return (target: any) => {
+        Annotation.instancesMap.set(capitalizeEveryWord(target.name), new target());
+    };
+};

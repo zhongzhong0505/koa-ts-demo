@@ -1,4 +1,4 @@
-import { Service } from '../decorators/autowired';
+import { Service } from '../decorators/annotation';
 
 @Service()
 export default class MenuService {

@@ -1,27 +1,41 @@
 
 import * as Router from 'koa-router';
-
-export default (rules: Array<any>, ctx: Router.IRouterContext, next: () => Promise<any>) => {
-    Object.assign(ctx.params, ctx.query);
-    rules.forEach(rule => {
-        if(typeof rule === "string") {
-            if(!ctx.params[rule]) {
+import Logger from '../common/log/Logger';
+const logger = new Logger();
+/**
+ * 必填和类型校验中间件
+ */
+export default (rules: any[], ctx: Router.IRouterContext, next: () => Promise<any>) => {
+    const params: any = {};
+    Object.assign(params, ctx.params, ctx.query, ctx.request.body);
+    rules.forEach((rule) => {
+        if (typeof rule === "string") {
+            if (!params[rule]) {
                 ctx.throw(412, `Param ${rule} is required!`);
+                logger.error(`Param ${rule} is required!`);
             }
-        }else if(typeof rule === "object") {
+        } else if (typeof rule === "object") {
             const {name, type, regex} = rule;
-            if(!ctx.params[name]) {
+            if (!params[name]) {
                 ctx.throw(412, `Param ${name} is required!`);
+                logger.error(`Param ${name} is required!`);
             }
-            if(!(typeof ctx.params[name] === type)) {
-                ctx.throw(412, `Param ${name} must be ${type}!`)
+            if (type === "number") {
+                if (!String(params[name]).match(/^\d+$/)) {
+                    ctx.throw(412, `Param ${name} must be number!`);
+                    logger.error(`Param ${name} must be number!`);
+                }
+            } else if (!(typeof params[name] === type)) {
+                ctx.throw(412, `Param ${name} must be ${type}!`);
+                logger.error(`Param ${name} must be ${type}!`);
             }
-            if(regex) {
-                if(!String(ctx.params[name]).match(regex)){
-                    ctx.throw(412, `Param ${name} must be match ${regex}!`)
+            if (regex) {
+                if (!String(params[name]).match(regex)) {
+                    ctx.throw(412, `Param ${name} must be match ${regex}!`);
+                    logger.error(`Param ${name} must be match ${regex}!`);
                 }
             }
         }
     });
     return next();
-}
+};
